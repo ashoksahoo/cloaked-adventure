@@ -24,8 +24,8 @@ var Post = mongoose.model('Post', PostSchema);
 exports.findPostById = function(PostId,callback){
 	Post.findOne({_id:PostId}, function(err, obj){
 		if (err){
-			callback(err.message);
 			console.error(err);
+			callback(err.message);
 		}
 		else{
 			callback(null,obj)
@@ -59,26 +59,26 @@ exports.findAllPosts = function(callback){
 	})
 };
 
-exports.updatePost=function(PostId,Post,callback){
-	Post.findOneAndUpdate({_id: PostId}, {$set:Post},function(err, obj){
-		if(err)
-		{
-			console.error(err);
-			callback( 'Error while updating the record', true);
-		}
-		else
-			callback(obj);
-	});
+exports.updatePost=function(id,record,callback){
+
+		Post.findOneAndUpdate(id,{$set:record}, function (err, obj) {
+			if (err) {
+				console.error(err);
+				callback('Error while updating the record');
+			}
+			else
+				callback(null, obj);
+		});
 };
 
-exports.destroyPost=function(PostId,callback){
-	Post.delete({_id: PostId},function(err, obj){
+exports.destroyPost=function(Id,callback){
+	Post.remove( {_id:Id},function(err, obj){
 		if(err)
 		{
 			console.error(err);
-			callback( 'Error while deleting the record', true);
+			callback( 'Error while deleting the record');
 		}
 		else
-			callback(obj);
+			callback(null,obj);
 	});
 };
