@@ -21,6 +21,7 @@ var PostSchema = new Schema({
 
 var Post = mongoose.model('Post', PostSchema);
 
+
 exports.findPostById = function(PostId,callback){
 	Post.findOne({_id:PostId}, function(err, obj){
 		if (err){
@@ -72,7 +73,7 @@ exports.updatePost=function(id,record,callback){
 };
 
 exports.destroyPost=function(Id,callback){
-	Post.remove( {_id:Id},function(err, obj){
+	Post.findOneAndRemove( Id,function(err, obj){
 		if(err)
 		{
 			console.error(err);
